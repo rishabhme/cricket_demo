@@ -1,0 +1,90 @@
+{% extends "base_site.html" %}
+{% block title %} {{ title }} {% endblock title %}
+{% block content %}
+    <div id="page-wrapper">
+        <div class="">
+                <ol class="breadcrumb text-right">
+                    <li class="breadcrumb-item"><a href="{% url 'cricketapp:dashboard' %}">Dashbord</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'cricketapp:player-list' team_id %}">Player List</a></li>
+                    <li class="breadcrumb-item active ">{{ title }}</li>
+                </ol>
+            <div class="clearfix"></div>
+            <div class="container-fluid">
+                <div style="text-align: center;">
+                                {% if is_message == 0 %}
+                                    <div class="alert alert-danger">
+                                    {{message}}
+                                    </div>
+                                {% else %}
+
+                                {% endif %}
+
+                                </div>
+            <div class="row" style="max-width:600px;">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>{{ title }}</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="card-body">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-success alert-dismissable">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                                            &times;
+                                        </button>
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <br/>
+                            <form action="{{ url }}" method="POST"
+                                  enctype="multipart/form-data" id="player" data-parsley-validate=""
+                                  class="row">
+
+                                {% csrf_token %}
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Profile : <span class="error">*</span></label>
+                                        <input class="form-control" type="file" name="image"
+                                               value="" >
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <label>First Name : <span class="error">*</span></label>
+                                        <input class="form-control" type="text" name="first_name"
+                                               value="" >
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Last Name: <span class="error">*</span></label>
+                                        <input class="form-control" type="text" name="last_name"
+                                                value =""
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Jersy Number:<span class="error">*</span></label>
+                                        <input class="form-control" type="text" name="jersy"
+                                                value =""
+                                        >
+                                </div>
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3">
+                                        <a href="{% url 'cricketapp:player-list' team_id %}"
+                                           class="btn btn-primary"
+                                           role="button">Cancel</a>
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </div>
+                                </div>
+                        </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        </div>
+
+    </div>
+    </div>
+{% endblock content %}

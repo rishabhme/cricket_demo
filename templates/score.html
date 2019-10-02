@@ -1,0 +1,107 @@
+{% extends "base_site.html" %}
+{% block title %} User Management {% endblock title %}
+{% block content %}
+<div id="page-wrapper">
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor">{{title}}</h3>
+                </div>
+                <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'cricketapp:dashboard' %}">Dashbord</a></li>
+                        <li class="breadcrumb-item active">{{title}}</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        {% if player_score_1 %}
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div class="table-wrapper">
+                                        <div class="table-responsive text-nowrap">
+                                            <h2>First Inning</h2>
+                                            <table class="table table-striped table-hover table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th><b>S.No.</b></th>
+                                                        <th><b>Name</b></th>
+                                                        <th><b>Run</b></th>
+                                                        <th><b>4s</b></th>
+                                                        <th><b>6s</b></th>
+                                                        <th><b>Status</b></th>
+
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for player_score in player_score_1 %}
+                                                    <tr>
+                                                        <td>{{ forloop.counter }}</td>
+                                                        <td>{{ player_score.player.first_name }}</td>
+                                                        <td>{{ player_score.runs }}</td>
+                                                        <td>{{ player_score.fours }}</td>
+                                                        <td>{{ player_score.sixes }}</td>
+                                                        <td>{{ player_score.status }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                        {% if player_score_2 %}
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div class="table-wrapper">
+                                        <div class="table-responsive text-nowrap">
+                                            <h2>Second Inning</h2>
+                                            <table class="table table-striped table-hover table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th><b>S.No.</b></th>
+                                                        <th><b>Name</b></th>
+                                                        <th><b>Run</b></th>
+                                                        <th><b>4s</b></th>
+                                                        <th><b>6s</b></th>
+                                                        <th><b>Status</b></th>
+
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for player_score in player_score_2 %}
+                                                    <tr>
+                                                        <td>{{ forloop.counter }}</td>
+                                                        <td>{{ player_score.player.first_name }}</td>
+                                                        <td>{{ player_score.runs }}</td>
+                                                        <td>{{ player_score.fours }}</td>
+                                                        <td>{{ player_score.sixes }}</td>
+                                                        <td>{{ player_score.status }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    {% endblock content %}

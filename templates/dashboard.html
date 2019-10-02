@@ -1,0 +1,136 @@
+{% extends "base_site.html" %}
+{% block title %} Dashboard {% endblock title %}
+{% block content %}
+<div id="page-wrapper" xmlns:margin-bottom="http://www.w3.org/1999/xhtml">
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor">Dashboard </h3>
+                </div>
+                <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="">Dashboard</a></li>
+                    </ol>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <!-- /row -->
+                <div class="row" style="color:blue;margin-left:30px;" style="margin:0px !important;">
+                    <div class="col-md-6">
+                        <h2>Match Schedule</h2>
+                        <p class="text-right"><a href="{% url 'cricketapp:add-match' %}" class="btn btn-info"><i  aria-hidden="true"></i> <span>Add Match</span></a></p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="widget smart-standard-widget" style="padding:10px 15px;">
+                            <div class="row">
+                                <div class="col-xs-4 widget-caption info">
+                                    <div>
+                                        <h3 style="margin-bottom:0">Match</h3>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4 no-pad">
+                                    <div class="widget-detail">
+                                        <h4 style="margin:5px 0">Date</h4>
+                                    </div>
+                                    </div>
+                                <div class="col-xs-4 no-pad">
+                                    <div class="widget-detail">
+                                        <h4 style="margin:5px 0">Status</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+                            {% for match in match_detail.matches_list %}
+                            <div class="col-md-12">
+                                <div class="widget smart-standard-widget" style="padding:10px 15px;">
+
+                                    <div class="row">
+                                        <div class="col-xs-4 widget-caption info">
+                                            <div>
+                                                <a href="{% url 'cricketapp:score' %}?match_id={{match.id}}&team_1={{match.team_1}}&team_2={{match.team_2}}">
+                                                <h3 style="margin-bottom:0">{{match.match_description}}</h3></a>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4 no-pad">
+                                            <div class="widget-detail">
+                                                <h4 style="margin:5px 0">{{match.match_date|date}}</h4>
+                                            </div>
+                                            </div>
+                                        <div class="col-xs-4 no-pad">
+                                            <div class="widget-detail">
+                                                <h4 style="margin:5px 0">{{match.status}}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <div class="col-md-12">
+                                <h2>Team List</h2>
+                                {% if request.user.is_authenticated %}
+                                <p class="text-right"><a href="{% url 'cricketapp:add-team' %}" class="btn btn-info"><i  aria-hidden="true"></i> <span>Add Team</span></a></p>
+                                {% endif %}
+                                <div class="row">
+                                <div class="col-xs-4 widget-caption info">
+                                    <div>
+                                        <h3 style="margin-bottom:0">Team Name</h3>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4 no-pad">
+                                    <div class="widget-detail text-right">
+                                        <h4 style="margin:5px 0">Flag</h4>
+                                    </div>
+                                    </div>
+                            </div>
+
+                            </div>
+
+                            {% for team in match_detail.team_list %}
+                            <div class="col-md-12">
+                                <div class="widget smart-standard-widget" style="padding:10px 15px;">
+                                    <div class="row">
+                                        <div class="col-xs-4 widget-caption info">
+                                                <h3 style="margin-bottom:0">{{team.name}}</h3>
+                                        </div>
+                                        <div class="col-xs-4 no-pad">
+                                            <div class="widget-detail">
+                                                <a href="{% url 'cricketapp:player-list' team.id %}"><img src="{{team.logo.url}}"  alt="Avatar" height="100" width="100"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <h2 class="">Point Table</h2>
+                    <div class="col-md-6 no-pad">
+                        <div class="row">
+                                <div class="col-xs-4 widget-caption info">
+                                    <div>
+                                        <h3 style="margin-bottom:0">Team Name</h3>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4 no-pad">
+                                    <div class="widget-detail text-right">
+                                        <h4 style="margin:5px 0">Point</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        {% for point in match_detail.point_list %}
+                         <div class="widget smart-standard-widget" style="padding:10px 15px;">
+                             <div class="row">
+                                <div class="col-xs-4 widget-caption info">
+                                     <h4>{{point.team_name}}</h4>
+                                </div>
+                                 <div class="col-xs-4 no-pad">
+                                     <div class="widget-detail">
+                                         <h3 style="margin:5px 0">{{point.point}}</h3>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                        {% endfor %}
+                    </div>
+                </div>
+    {% endblock content %}

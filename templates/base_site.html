@@ -1,0 +1,453 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        {% block meta %}
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+            <meta name="description" content="">
+            <meta name="author" content="">
+        {% endblock meta %}
+
+        <title>Cricket Demo: {% block title %}{% endblock %}</title>
+
+        {% block stylesheets %}
+
+            <!-- Bootstrap Core CSS -->
+            <link rel="stylesheet" href="{% static 'assets//plugins/bootstrap/css/bootstrap.min.css'%}">
+
+            <!-- Font CSS -->
+            <link rel="stylesheet" href="{% static 'css/all_icons.css'%}">
+
+            <!-- MetisMenu CSS -->
+            <link rel="stylesheet" href="{% static 'assets/plugins/metisMenu/metisMenu.min.css'%}">
+
+            <!-- Loader CSS -->
+            <link rel="stylesheet" href="{% static 'css/loader.css'%}">
+            <link rel="stylesheet" href="{% static 'css/custom.css'%}">
+
+            <!-- Custom CSS -->
+            <link rel="stylesheet" href="{% static 'css/pazi.min.css'%}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+            <!-- Change Color CSS -->
+            <link rel="stylesheet" href="{% static 'css/skin/default-skin.css'%}" />
+
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+            <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+            <!--[if lt IE 9]>
+
+
+		    <![endif]-->
+        {% endblock stylesheets %}
+
+    {% endblock head %}
+</head>
+
+<body>
+{% block body %}
+     <div id="wrapper" class="active">
+        <div class="fakeLoader"></div>
+
+            {% block sidebar %}
+         <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0">
+            {% include "sidebar.html" %}
+         </nav>
+            {% endblock sidebar %}
+
+            {% block content %}
+                <!-- {{ content }} -->
+            {% endblock content %}
+
+            {% block footer %}
+                <footer>
+                    {% include "footer.html" %}
+                </footer>
+            {% endblock footer %}
+        </div>
+
+
+    {% block javascripts %}
+        <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{% static 'assets/plugins/jquery/dist/jquery.min.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <!-- ChartJS -->
+    <script src="{% static 'assets/plugins/chart.js/Chart.js' %}"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="{% static 'assets/plugins/metisMenu/metisMenu.min.js' %}"></script>
+
+    <!-- Loader JavaScript -->
+    <script src="{% static 'js/loader.js' %}"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="{% static 'js/pazi.min.js' %}"></script>
+	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <!-- Custom Float JavaScript -->
+    <script src="{% static 'js/custom/dashboard/dashboard1.js' %}"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
+    <script>
+      $(document).ready(function(){
+         $.ajax({
+          url: $("#container").attr("data-url"),
+          dataType: 'json',
+          success: function (data) {
+            Highcharts.chart("container", data);
+          }
+        });
+    });
+    $(document).ready(function(){
+    $(".highcharts-credits").hide();
+
+});
+
+    </script>
+    <script>
+
+        $("#update-show").click(function() {
+            $("#update-profile").removeClass("hidden");
+        });
+        $("#update-hide").click(function() {
+            $("#update-profile").addClass("hidden");
+        });
+
+    </script>
+    <script>
+
+$("#ChangePassword").validate({
+rules: {
+    oldpassword: {
+    required: true,
+    },
+    newpassword: {
+    required: true,
+    minlength: 5,
+    },
+    confirmpassword: {
+    required: true,
+    minlength: 5,
+    equalTo : "#password",
+    },
+
+
+    }
+    });
+</script>
+<script>
+
+$("#Adminid").validate({
+rules: {
+    name: {
+    required: true,
+    },
+    email: {
+    required: true,
+    },
+    phone_no: {
+    required: true,
+    digits:true
+    }
+
+
+    }
+    });
+</script>
+<script>
+jQuery.validator.addMethod("Fname", function(value, element) {
+return value.match(/[a-zA-Z]/);
+},"Please enter characters only");
+jQuery.validator.addMethod("Lname", function(value, element) {
+return value.match(/[a-zA-Z]/);
+},"Please enter characters only");
+jQuery.validator.addMethod("Email", function(value, element) {
+return value.match(/[a-zA-Z]/);
+},"Please enter characters only");
+
+$("#user").validate({
+rules: {
+
+    team1: {
+    required: true,
+    },
+    team2: {
+    required: true,
+    },
+    match_date: {
+    required: true,
+    },
+    },
+ messages: {
+team1:{
+required:"Select Your Team",
+},
+team2:{
+required:"Select Your Team",
+},
+match_date:{
+required:"Choose Your Date",
+},
+jersy:{
+required:"Please Enter Your Jersy No.",
+},
+player:{
+required:"Please Enter Your Jersy No.",
+},
+
+    }
+    });
+$("#player").validate({
+rules: {
+
+    first_name: {
+    required: true,
+    },
+    last_name: {
+    required: true,
+    },
+    jersy: {
+    required: true,
+    number:true,
+    },
+    image: {
+    required: true,
+    },
+    },
+ messages: {
+first_name:{
+required:"please Enter first_name",
+},
+last_name:{
+required:"please Enter last_name",
+},
+jersy:{
+required:"Please Enter  Jersy No.",
+},
+image:{
+required:"Please Enter Player Image",
+},
+
+    }
+    });
+
+$("#team").validate({
+rules: {
+
+    club: {
+    required: true,
+    },
+    team_name: {
+    required: true,
+    },
+    flag: {
+    required: true,
+    },
+    },
+ messages: {
+club:{
+required:"Please Choice club",
+},
+team_name:{
+required:"Please Enter Team Name",
+},
+flag:{
+required:"Please Enter Team flag",
+},
+
+    }
+    });
+
+</script>
+<script>
+
+$("#match").validate({
+rules: {
+    match: {
+    required: true,
+    },
+    team1: {
+    required: true,
+    },
+    players1: {
+    required: true,
+    },
+    team2: {
+    required: true,
+    },
+    players2: {
+    required: true,
+    },
+
+    },
+   messages: {
+
+
+team1: {
+required:"Select Your First Team",
+},
+
+players1:{
+required:"Select Your Players",
+},
+match:{
+required:"Enter Your Match",
+},
+team2:{
+required:"Select the Second Team",
+},
+players2:{
+required:"Select the Players",
+},
+
+
+    }
+    });
+</script>
+<script>
+$("#score").validate({
+        rules: {
+    match: {
+    required: true,
+    },
+    team1: {
+    required: true,
+    },
+    team2: {
+    required: true,
+    },
+    runs: {
+    required: true,
+    digits:true,
+    },
+    wicket: {
+    required: true,
+    digits:true,
+    },
+    over: {
+    required: true,
+    number: true,
+    },
+    status: {
+    required: true,
+    },
+    point: {
+    required: true,
+    digits:true,
+    },
+    },
+    messages: {
+
+
+team1: {
+required:"Select Your Team",
+},
+team2: {
+required:"Select Your Team",
+},
+status:{
+required:"Select Your Status",
+},
+match:{
+required:"Select Your Match",
+},
+runs:{
+required:"Enter The Runs",
+},
+wicket:{
+required:"Enter The Wickets",
+},
+over:{
+required:"Enter The Overs",
+},
+point:{
+required:"Enter The Points",
+},
+
+    }
+    });
+</script>
+<script>
+$('#select1').on('change', function(){
+
+var id = $(this).val();
+var csrfmiddlewaretoken = $('input[name=csrfmiddlewaretoken]').val();
+    if(id!=''){
+         $.ajax({
+            type: 'POST',
+            url:  '/match/ajax_team_list/',
+            data:  {'id': id,'csrfmiddlewaretoken': csrfmiddlewaretoken},
+            success: function (response) {
+                let dropdown = document.getElementById('select2');
+                dropdown.length = 0;
+                let defaultOption = document.createElement('option');
+                defaultOption.text = 'Select Team';
+                defaultOption.value = "";
+                dropdown.add(defaultOption);
+                dropdown.selectedIndex = 0;
+
+                if(response.status == 'success'){
+
+                    var obj = response.result;
+                    let option;
+                    for (let i = 0; i < obj.length; i++) {
+                      option = document.createElement('option');
+                      option.text = obj[i].name;
+                      option.value = obj[i].id;
+                      dropdown.add(option);
+                    }
+
+
+                var obj1 = response.result1;
+                    let option1;
+                    for (let i = 0; i < obj1.length; i++) {
+                      option1 = document.createElement('option');
+                      option1.text = obj1[i].name;
+                      option1.value = obj1[i].id;
+                      dropdown1.add(option1);
+                    }
+
+
+                } else if(response.status == 'error') {
+
+                   } else {
+                    return false;
+                }
+
+            }
+        });
+
+    } else {
+
+     return false;
+    }
+
+});
+</script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+ <script>
+$(function() {
+    $("#match_date").datepicker({
+        dateFormat: 'mm/dd/yy',
+        maxDate: 365.25*18,
+        yearRange: "19:50",
+        changeMonth: true,
+        changeYear: true
+    });
+  });
+  </script>
+
+    {% endblock %}
+{% endblock body %}
+</body>
+</html>
