@@ -105,7 +105,7 @@ class Inning(models.Model):
 
 
     def __str__(self):
-        return 'Inning ' + str(self.inning_no) + ': ' + str(self.match_player)
+        return str(self.match_player.team_id)
 
     class Meta:
         db_table = "inning"
@@ -122,11 +122,11 @@ class PlayerScoreCard(models.Model):
 
     inning = models.ForeignKey(Inning, related_name="player_inning", blank=False, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, related_name="player_score", blank=False, on_delete=models.CASCADE)
-    runs = models.IntegerField(blank=False, default=0)
-    fifty = models.IntegerField(blank=False, default=0)
-    hundred = models.IntegerField(blank=False, default=0)
-    fours = models.IntegerField(blank=False, default=0)
-    sixes = models.IntegerField(blank=False, default=0)
+    runs = models.CharField(max_length=10,blank=True, default=0)
+    fifty = models.CharField(max_length=10,blank=True, default=0)
+    hundred = models.CharField(max_length=10,blank=True, default=0)
+    fours = models.CharField(max_length=10,blank=True, default=0)
+    sixes = models.CharField(max_length=10,blank=True, default=0)
     status = models.CharField(max_length=10, choices = PLAYER_STATUS_CHOICE, blank=True)
 
     def __str__(self):

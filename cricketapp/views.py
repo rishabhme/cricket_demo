@@ -199,16 +199,54 @@ class MatchScoreView(View):
 
         if match_detail.exists():
             try:
-                inning_1 = Inning.objects.get(match_player =match_detail[0] )
-                player_score_1 = PlayerScoreCard.objects.filter(inning =inning_1 )
+                inning_1 = Inning.objects.filter(match_player__in =match_detail)
+                player_score_1 = PlayerScoreCard.objects.filter(inning__in =inning_1 )
             except:
                 pass
+
         match_detail = MatchPlayerDetails.objects.filter(match_id__id=int(match_id), team_id__id=int(team_2))
         player_score_2 = []
         if match_detail.exists():
             try:
-                inning_2 = Inning.objects.get(match_player=match_detail[0])
-                player_score_2 = PlayerScoreCard.objects.filter(inning=inning_2)
+                inning_2 = Inning.objects.filter(match_player__in=match_detail)
+                player_score_2 = PlayerScoreCard.objects.filter(inning__in=inning_2)
             except:
                 pass
-        return render(request, "score.html", {"player_score_2": player_score_2,"player_score_1":player_score_1, "title": "Match Score"})
+        return render(request, "score.html", {"match_id":match_id,"team_1":team_1,"team_2":team_2,"player_score_2": player_score_2,"player_score_1":player_score_1, "title": "Match Score"})
+
+class AddScoreView(View):
+
+    def get(self,request,*args,**kwargs):
+        match_id = request.GET.get('match_id')
+        team = request.GET.get('team')
+        match_detail = MatchPlayerDetails.objects.filter(match_id__id=int(match_id), team_id__id=int(team))
+
+        return render(request, "add_score.html",
+                      {"match_detail": match_detail,"title": "Add Score"})
+
+    def post(self,request):
+        import pdb;pdb.set_trace()
+        match_id = request.GET.get('match_id')
+        team = request.GET.get('team')
+        match_detail = MatchPlayerDetails.objects.filter(match_id__id=int(match_id), team_id__id=int(team))
+        inning_obj, created = Inning.objects.get_or_create(match_player__in=match_detail)
+        data = self.request.POST
+        id_list = data.getlist("id")
+        for id in id_list:
+            player_id = data.get("name_{}".format(id))
+            runs = data.get("run_{}".format(id),None)
+            fours = data.get("fours_{}".format(id),None)
+            sixes = data.get("sixes_{}".format(id),None)
+            status = data.get("status_{}".format(id),None)
+            try:
+                player_obj = Player.objects.get(id=player_id)
+                player_score_obj,created = PlayerScoreCard.objects.get_or_create(inning=inning_obj,player=player_obj)
+                player_score_obj.runs =runs
+                player_score_obj.fours =fours
+                player_score_obj.sixes =sixes
+                player_score_obj.status =status
+                player_score_obj.save()
+            except:
+                pass
+
+        return redirect("cricketapp:dashboard")

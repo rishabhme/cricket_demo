@@ -1,17 +1,22 @@
 {% extends "base_site.html" %}
-{% block title %} {{ title }} {% endblock title %}
+{% block title %} User Management {% endblock title %}
 {% block content %}
-    <div id="page-wrapper">
-        <div class="">
-                <ol class="breadcrumb text-right">
-                    <li class="breadcrumb-item"><a href="{% url 'cricketapp:dashboard' %}">Dashbord</a></li>
-                    <li class="breadcrumb-item active ">{{ title }}</li>
-                </ol>
-            <div class="clearfix"></div>
+<div id="page-wrapper">
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor">{{title}}</h3>
+                </div>
+                <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'cricketapp:dashboard' %}">Dashbord</a></li>
+                        <li class="breadcrumb-item active">{{title}}</li>
+                    </ol>
+                </div>
+            </div>
             <div class="container-fluid">
-                <div style="text-align: center;">
-                                {% if is_message == 0 %}
-                                    <div class="alert alert-danger">
+                    <div style="text-align: center;">
+                                {% if is_message == 1 %}
+                                    <div class="alert alert-success">
                                     {{message}}
                                     </div>
                                 {% else %}
@@ -19,51 +24,55 @@
                                 {% endif %}
 
                                 </div>
-            <div class="row" style="max-width:600px;">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>{{ title }}</h2>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="card-body">
-                            {% if messages %}
-                                {% for message in messages %}
-                                    <div class="alert alert-success alert-dismissable">
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                                            &times;
-                                        </button>
-                                        {{ message }}
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                            <br/>
-                            <form action="{{ url }}" method="POST"
+                <!-- row -->
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div class="table-wrapper">
+                                        <div class="table-responsive text-nowrap">
+                                            <table class="table table-striped table-hover table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th><b>S.No.</b></th>
+                                                        <th><b>First Name</b></th>
+                                                        <th><b>Run</b></th>
+                                                        <th><b>4s</b></th>
+                                                        <th><b>6s</b></th>
+                                                        <th><b>Status</b></th>
+
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <form action="{{ url }}" method="POST"
                                   enctype="multipart/form-data" id="team" data-parsley-validate=""
                                   class="row">
+                                                    {% csrf_token %}
+                                                {% for player_detail in match_detail %}
+                                                    <tr>
+                                                        <td ><input class="form-control" type="text" name="id" value="{{ forloop.counter }}" ></td>
+                                                        <td><select class="form-control" type="select" name="name_{{forloop.counter}}">
+                                                            <option value="{{ player_detail.player.id }}">{{player_detail.player.first_name}}</option>
+                                                        </select></td>
+                                                        <td><input class="form-control" type="number" name="run_{{forloop.counter}}"
+                                               value="" ></td>
+                                                        <td><input class="form-control" type="text" name="fours_{{forloop.counter}}"
+                                               value="" ></td>
+                                                        <td><input class="form-control" type="text" name="sixes_{{forloop.counter}}"
+                                               value="" ></td>
+                                                        <td><select name="status_{{forloop.counter}}" class="form-control">
+                                                   <option value="out">Out</option>
+                                                    <option value="notout">Not Out</option>
+                                                    <option value="notplayed" selected>Not Played</option>
 
-                                {% csrf_token %}
-                                <div class="form-group col-md-12">
-                                    <label class="control-label">Club : <span class="error">*</span></label>
-                                        <select id ="select1" name="club" class="form-control">
-                                                    <option value=""> Select Club </option>
-                                                    {% for club in club_list %}
-                                                            <option value="{{club.id}}">{{club.name}}</option>
-                                                    {% endfor %}
-                                                </select>
-                                </div>
+                                                </select></td>
 
-                                <div class="form-group col-md-12">
-                                    <label>Team Name <span class="error">*</span></label>
-                                        <input class="form-control" type="text" name="team_name"
-                                               value="" >
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label>Flag <span class="error">*</span></label>
-                                        <input class="form-control" type="file" name="flag"
-                                               value="" >
-                                </div>
-                                <div class="ln_solid"></div>
+                                                    </tr>
+                                                {% endfor %}
+                                                    <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3">
                                         <a href="{% url 'cricketapp:dashboard' %}"
@@ -72,15 +81,20 @@
                                         <button type="submit" class="btn btn-success">Submit</button>
                                     </div>
                                 </div>
-
-                        </form>
+                        </div>
+                                                </form>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ./Basic Table -->
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
 
-        </div>
 
-    </div>
-    </div>
-{% endblock content %}
+    {% endblock content %}

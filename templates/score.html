@@ -15,6 +15,7 @@
             </div>
             <div class="container-fluid">
                 <!-- row -->
+                <p class="text-right"><a href="{% url 'cricketapp:add-score' %}?match_id={{match_id}}&team={{team_1}}" class="btn btn-info"><i  aria-hidden="true"></i> <span>Add Score</span></a></p>
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         {% if player_score_1 %}
@@ -58,6 +59,8 @@
                         {% endif %}
                         </div>
                     </div>
+                <p class="text-right"><a href="{% url 'cricketapp:add-score' %}?match_id={{match_id}}&team={{team_2}}" class="btn btn-info"><i  aria-hidden="true"></i> <span>Add Score</span></a></p>
+                <div class ="row">
                     <div class="col-md-12 col-sm-12">
                         {% if player_score_2 %}
                         <div class="card">
