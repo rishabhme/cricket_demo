@@ -225,7 +225,6 @@ class AddScoreView(View):
                       {"match_detail": match_detail,"title": "Add Score"})
 
     def post(self,request):
-        import pdb;pdb.set_trace()
         match_id = request.GET.get('match_id')
         team = request.GET.get('team')
         match_detail = MatchPlayerDetails.objects.filter(match_id__id=int(match_id), team_id__id=int(team))
